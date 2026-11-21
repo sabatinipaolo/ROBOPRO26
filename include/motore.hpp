@@ -2,6 +2,8 @@
 #define MOTORE_HPP
 
 #include <Arduino.h>
+#include "robopropin.h"
+
 class Motore
 {
 

@@ -1,0 +1,27 @@
+#ifndef MOTORE_HPP
+#define MOTORE_HPP
+
+#include <Arduino.h>
+class Motore
+{
+
+public:
+    Motore(int pin1, int pin2, int pinpwm, int pin_enc1, int pin_enc2);
+
+    Motore(const Motore &) = delete;            // impedisce copie di oggetti motori, Motore m(m2) (costruttore copia) genera errore
+    Motore &operator=(const Motore &) = delete; // m1=m2 genera errore
+                                                // vedi qui: https://www.stroustrup.com/C++11FAQ.html#default
+
+    void muovi(int pwm);
+    void stop();
+
+
+private:
+    int pin1;
+    int pin2;
+    int pinpwm;
+    int pin_enc1;
+    int pin_enc2;
+};
+
+#endif // MOTORE_HPP

@@ -1,5 +1,5 @@
-#ifndef MOTORE_HPP
-#define MOTORE_HPP
+#ifndef MOTORI_HPP
+#define MOTORI_HPP
 
 #include <Arduino.h>
 #include "robopropin.h"
@@ -26,4 +26,11 @@ private:
     int pin_enc2;
 };
 
-#endif // MOTORE_HPP
+
+extern Motore Motori[]; 
+extern Motore & Motore_AS;
+extern Motore & Motore_PS;
+extern Motore & Motore_PD;
+extern Motore & Motore_AD;
+
+#endif // MOTORI_HPP

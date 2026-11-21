@@ -1,4 +1,4 @@
-#include "motore.hpp"
+#include "motori.hpp"
 
 Motore::Motore(int pin1, int pin2, int pinpwm, int pin_enc1, int pin_enc2)
     : pin1(pin1), pin2(pin2), pinpwm(pinpwm), pin_enc1(pin_enc1), pin_enc2(pin_enc2)

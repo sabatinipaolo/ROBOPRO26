@@ -40,7 +40,42 @@ void Motore::muovi(int pwm)
     };
 };
 
-Motore Motori [] = {
+void Motore::ISR_encoder()
+{ // semplicissima ISR da usare su interrupt del pin_enc1 su RISING
+    // Determina la direzione usando il canale B
+    if (digitalRead(pin_enc2) == HIGH)
+    {
+        conta_impulsi_encoder++;
+    }
+    else
+    {
+        conta_impulsi_encoder--;
+    }
+}
+
+void Motore::aggiorna_lettura_rpm()
+{
+    noInterrupts();
+    unsigned long ora = millis();
+    unsigned long cnt = conta_impulsi_encoder;
+    interrupts();
+
+    unsigned long delta_t = ora - tempo_ultimo_aggiornamento_rpm;
+    if ((delta_t) < DELTA_T)
+        return;
+
+    long delta_impulsi = cnt - ultimo_conteggio_impulsi;
+
+    float rpm_raw =
+        (float)delta_t * 60000.0f / (IMPULSI_PER_GIRO * delta_t);
+
+    rpm = rpm_raw;
+
+    ultimo_conteggio_impulsi = cnt;
+    tempo_ultimo_aggiornamento_rpm;
+}
+
+Motore Motori[] = {
     Motore(PIN_MOT_AS1, PIN_MOT_AS2, PIN_PWM_AS, PIN_ENC_AS1, PIN_ENC_AS2),
     Motore(PIN_MOT_PS1, PIN_MOT_PS2, PIN_PWM_PS, PIN_ENC_PS1, PIN_ENC_PS2),
     Motore(PIN_MOT_PD1, PIN_MOT_PD2, PIN_PWM_PD, PIN_ENC_PD1, PIN_ENC_PD2),

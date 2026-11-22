@@ -14,14 +14,13 @@ public:
 
     void muovi(int pwm);
     void stop();
-
+    const int pin1;
+    const int pin2;
+    const int pinpwm;
+    const int pin_enc1;
+    const int pin_enc2;
 
 private:
-    int pin1;
-    int pin2;
-    int pinpwm;
-    int pin_enc1;
-    int pin_enc2;
 };
 
 

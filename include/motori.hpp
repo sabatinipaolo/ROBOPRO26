@@ -17,7 +17,7 @@ public:
     void muovi(int pwm);
     void stop();
 
-    float get_RPM() { return rpm };
+    float get_RPM() { return rpm; };
     void ISR_encoder();
     void aggiorna_lettura_rpm();
 

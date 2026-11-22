@@ -67,12 +67,12 @@ void Motore::aggiorna_lettura_rpm()
     long delta_impulsi = cnt - ultimo_conteggio_impulsi;
 
     float rpm_raw =
-        (float)delta_t * 60000.0f / (IMPULSI_PER_GIRO * delta_t);
+        (float)delta_impulsi * 60000.0f / (IMPULSI_PER_GIRO * delta_t);
 
     rpm = rpm_raw;
 
     ultimo_conteggio_impulsi = cnt;
-    tempo_ultimo_aggiornamento_rpm;
+    tempo_ultimo_aggiornamento_rpm=ora;
 }
 
 Motore Motori[] = {

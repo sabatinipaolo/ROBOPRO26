@@ -2,6 +2,12 @@
 #include "controller.hpp"
 #include "motori.hpp"
 #include "robopropin.h"
+
+constexpr float radice2_su2 = 0.70710678118654752440084436210485;
+constexpr float pi = 3.14159265358979323846;
+constexpr float quarantacinque_rad = 45 * pi / 180.0f;
+
+
 Controller_class::Controller_class()
 {
     init();
@@ -23,13 +29,53 @@ void Controller_class::stop(){
             Motori[i].stop();
     }
 
-//            N
-//       NO   |   NE
-//          \   /
-//     O   --   --   E
-//          /   \
-//       SO   |   SE
-//            S  
+
+/* adottata convenzione  ROS vedi: https://control.ros.org/rolling/doc/ros2_controllers/doc/mobile_robot_kinematics.html#omnidirectional-wheeled-mobile-robots
+                          ^  x
+              alpha >0   =0    alpha<0
+                          |
+          mot_0    +      |      -    mot_3
+                  /       |       \
+                 -        |        +
+     y                    |
+    <---------------------+----------------        
+                          |     
+                          |        
+          mot_1  +        |        -  mot_2
+                  \       |       / 
+                   -      |      +
+*/
+
+void Controller_class::trasla(float alfa, int velocita)
+{   //TODO: ottimizzare 
+    
+    float alfa_rad = alfa * pi / 180.0f;
+
+    float cosa = cos(alfa_rad + quarantacinque_rad);
+    float sina = sin(alfa_rad + quarantacinque_rad);
+
+    int vad = static_cast<int>(-velocita * radice2_su2 * sina);
+    int vps = -vad;
+
+    int vas = static_cast<int>(velocita * radice2_su2 * cosa);
+    int vpd = -vas;
+
+    Motore_AD.muovi(vad);
+    Motore_PD.muovi(vpd);
+    Motore_AS.muovi(vas);
+    Motore_PS.muovi(vps);
+}
+
+
+
+/*            N
+         NO   |   NE
+            \   /
+       O   --   --   E
+            /   \
+         SO   |   SE
+              S  
+*/
 
 void Controller_class::trasla_nord(int pwm){
     Motore_AS.muovi(pwm);

@@ -9,6 +9,8 @@ public:
 
     void stop();
 
+    void trasla(float alfa, int velocita);
+
     void trasla_nord(int pwm);
     void trasla_nord_est(int pwm);
     void trasla_est(int pwm);

@@ -10,6 +10,7 @@ public:
     void stop();
 
     void trasla(float alfa, int velocita);
+    void trasla_max(float alfa);
 
     void trasla_nord(int pwm);
     void trasla_nord_est(int pwm);

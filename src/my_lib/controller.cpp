@@ -66,7 +66,36 @@ void Controller_class::trasla(float alfa, int velocita)
     Motore_PS.muovi(vps);
 }
 
+void Controller_class::trasla_max(float alfa)
+{   //TODO: ottimizzare 
+    
+    float alfa_rad = alfa * pi / 180.0f;
 
+    float cosa = cos(alfa_rad + quarantacinque_rad);
+    float sina = sin(alfa_rad + quarantacinque_rad);
+
+    int vad,vas,vps,vpd;
+
+    if (abs(sina) > abs(cosa)) // TODO : trasformare in confronto su angolo ..
+    {
+        vad = -255;
+        vps = -vad;
+        vas = static_cast<int>(255 * cosa / sina);
+        vpd = -vas;
+    }
+    else
+    {
+        vad = static_cast<int>(-255 * sina / cosa);
+        vps = -vad;
+        vas = 255;
+        vpd = -vas;
+    }
+
+    Motore_AD.muovi(vad);
+    Motore_PD.muovi(vpd);
+    Motore_AS.muovi(vas);
+    Motore_PS.muovi(vps);
+}
 
 /*            N
          NO   |   NE
